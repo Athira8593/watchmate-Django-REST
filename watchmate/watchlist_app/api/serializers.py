@@ -1,28 +1,36 @@
 from rest_framework import serializers
-from watchlist_app.models import Movie
+from watchlist_app.models import WatchList,StreamPlatform
 
 # model serializer
 
-class MovieSerializer(serializers.ModelSerializer):
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Movie
+        model = StreamPlatform
+        fields = '__all__'
+
+
+
+class WatchListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchList
         fields = '__all__'
         # fields = ['id', 'name', 'description']
         # exclude = ['id','active']
 
-    # # field level validation
-    def validate_description(self, value):
-        if len(value)<2:
-            raise serializers.ValidationError("description is too short")
-        else:
-            return value
+    # # # field level validation
+    # def validate_description(self, value):
+    #     if len(value)<2:
+    #         raise serializers.ValidationError("description is too short")
+    #     else:
+    #         return value
     
-    # object level validation
-    def validate(self, data):
-        if data['name']== data['description']:
-            raise serializers.ValidationError("description is not eqaul to name")
-        else:
-            return data
+    # # object level validation
+    # def validate(self, data):
+    #     if data['name']== data['description']:
+    #         raise serializers.ValidationError("description is not eqaul to name")
+    #     else:
+    #         return data
 
 
 
