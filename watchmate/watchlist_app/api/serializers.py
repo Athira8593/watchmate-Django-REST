@@ -12,10 +12,9 @@ class WatchListSerializer(serializers.ModelSerializer):
         # exclude = ['id','active']
 
 
-class StreamPlatformSerializer(serializers.ModelSerializer):
-    # watchlist = WatchListSerializer(many=True, read_only=True)
-    # watchlist = serializers.StringRelatedField(many=True)
-    watchlist = serializers.HyperlinkedRelatedField(many=True,read_only=True, view_name='movie-detail')
+class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    watchlist = WatchListSerializer(many=True, read_only=True)
+    
     class Meta:
         model = StreamPlatform
         fields = '__all__'
