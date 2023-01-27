@@ -4,13 +4,6 @@ from watchlist_app.models import WatchList,StreamPlatform
 # model serializer
 
 
-class StreamPlatformSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StreamPlatform
-        fields = '__all__'
-
-
-
 class WatchListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WatchList
@@ -18,30 +11,33 @@ class WatchListSerializer(serializers.ModelSerializer):
         # fields = ['id', 'name', 'description']
         # exclude = ['id','active']
 
-    # # # field level validation
-    # def validate_description(self, value):
-    #     if len(value)<2:
-    #         raise serializers.ValidationError("description is too short")
-    #     else:
-    #         return value
-    
-    # # object level validation
-    # def validate(self, data):
-    #     if data['name']== data['description']:
-    #         raise serializers.ValidationError("description is not eqaul to name")
-    #     else:
-    #         return data
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    # watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = serializers.StringRelatedField(many=True)
+    watchlist = serializers.HyperlinkedRelatedField(many=True,read_only=True, view_name='movie-detail')
+    class Meta:
+        model = StreamPlatform
+        fields = '__all__'
 
 
 
 
 
-# def name_legth(value):
-#     if len(value)<2:
-#         raise serializers.ValidationError("name is too short")
-#     else:
-        
-#         return value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # class MovieSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     name =serializers.CharField(validators=[name_legth])
